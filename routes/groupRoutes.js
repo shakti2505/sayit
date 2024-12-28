@@ -1,5 +1,4 @@
 import express from "express";
-import { googleLogin } from "../controller/authControler.js";
 import {
   createGroup,
   deleteGroup,
@@ -10,9 +9,6 @@ import {
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
-
-// auth route
-router.get("/google", googleLogin);
 
 // chat group route
 

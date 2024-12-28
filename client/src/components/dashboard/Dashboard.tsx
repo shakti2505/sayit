@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import DashNav from "./DashNav";
+import CreateChatGroup from "../groupChat/CreateChatGroup";
 
 interface UserInfo {
   image: string;
@@ -14,14 +16,16 @@ const Dashboard: React.FC = () => {
     if (data) {
       setuserInfo(JSON.parse(data));
     }
-  });
+  }, []);
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <img src={userInfo?.image} alt="user" />
-      <p>{userInfo?.name}</p>
-      <p>{userInfo?.email}</p>
-    </div>
+    <>
+      <DashNav />
+      <div className="container">
+        <div className="flex justify-end mt-10">
+          <CreateChatGroup />
+        </div>
+      </div>
+    </>
   );
 };
 
