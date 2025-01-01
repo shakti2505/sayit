@@ -22,14 +22,12 @@ export const createGroup = async (req, res) => {
 export const getAllGroupOfUser = async (req, res) => {
   try {
     const user = req.user;
-    console.log(user._id);
     const groups = await ChatGroupModal.find({ user_id: user._id }).sort({
       createdAt: -1,
     });
-
     return res
       .status(200)
-      .json({ message: "Chat Groups fetched successfully", data: groups });
+      .json({ message: "Chat Groups fetched successfully", groups: groups });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong" });

@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from "react";
 import DashNav from "./DashNav";
 import CreateChatGroup from "../groupChat/CreateChatGroup";
+import GroupChatCard from "../groupChat/GroupChatCard";
 
-interface UserInfo {
-  image: string;
-  name: string;
-  email: string;
-}
 
 const Dashboard: React.FC = () => {
-  const [userInfo, setuserInfo] = useState<UserInfo | null>(null);
-
-  useEffect(() => {
-    const data = localStorage.getItem("user");
-    if (data) {
-      setuserInfo(JSON.parse(data));
-    }
-  }, []);
+ 
   return (
     <>
       <DashNav />
       <div className="container">
-        <div className="flex justify-end mt-10">
+        <div className="flex justify-end mt-24 fixed  w-full">
           <CreateChatGroup />
+        </div>
+        <div className="flex mt-20 ">
+        <GroupChatCard/>
         </div>
       </div>
     </>

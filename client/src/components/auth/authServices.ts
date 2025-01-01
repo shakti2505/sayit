@@ -16,7 +16,10 @@ export const googleAuth = async (
 ): Promise<GoogleAuthResponse> => {
   try {
     const response = await axios.get(
-      `${BASE_URL}/auth/google?code=${authCode}`
+      `${BASE_URL}/auth/google?code=${authCode}`,
+      {
+        withCredentials:true,
+      }
     );
     return response.data;
   } catch (error: any) {

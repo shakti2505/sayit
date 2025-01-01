@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 
 const authMiddleware = async (req, res, next) => {
-    const authHeader = req.headers.authorization;
+    const authHeader = req.headers.authorization ? req.headers.authorization : req.cookies.jwt
+    
     if(authHeader==null ||  authHeader==undefined){
         return res.status(401).json({message: "Unauthorized"});
     }

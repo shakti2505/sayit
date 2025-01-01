@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { Toaster } from '../src/components/ui/sonner'
+import ChatPage from "./components/chats/ChatPage";
 
 
 function App() {
@@ -20,6 +21,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/chats"
+          element={
+            <ProtectedRoute>
+              <ChatPage />
             </ProtectedRoute>
           }
         />

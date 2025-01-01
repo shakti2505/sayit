@@ -5,6 +5,8 @@ import { oauth2Client } from "../utils/googleConfig.js";
 import UserModal from "../modals/userModal.js";
 import Jwt from "jsonwebtoken";
 
+const maxAge = 3 * 60 * 60;
+
 export const googleLogin = async (req, res) => {
   try {
     const { code } = req.query;
@@ -27,6 +29,7 @@ export const googleLogin = async (req, res) => {
     const token = Jwt.sign({ _id, email }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_TIMEOUT,
     });
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 5000 });
 
     return res.status(200).json({ message: "success", token, user });
   } catch (err) {

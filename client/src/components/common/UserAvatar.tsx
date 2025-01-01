@@ -1,13 +1,12 @@
 import React from "react";
 import {
   Avatar,
-  AvatarFallback,
   AvatarImage,
 } from "../../components/ui/avatar";
 import { useUser } from "../../utils/criticalState";
 
 const UserAvatar: React.FC = () => {
-  const { name, image } = useUser();
+  const { image } = useUser();
 
   //   const { user, image } = useSelector((state: RootState) => state.auth);
   //   const user = localStorage.getItem("user");
@@ -20,7 +19,7 @@ const UserAvatar: React.FC = () => {
   return (
     <Avatar>
       <AvatarImage src={image} />
-      <AvatarFallback>{name}fdfdf</AvatarFallback>
+      {/* <AvatarFallback>{name}</AvatarFallback> */}
     </Avatar>
   );
 };
