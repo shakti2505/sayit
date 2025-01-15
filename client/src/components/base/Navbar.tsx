@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
             QuickChat makes it effortless to create secure chat links and start
             conversations in seconds.
           </DialogDescription>
-        </DialogHeader>
+        </DialogHeader> 
         <GoogleAuthWrapper/>
       </DialogContent>
     </Dialog>

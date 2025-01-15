@@ -11,21 +11,20 @@ import "./modals/userModal.js";
 import { Server } from "socket.io";
 import { setUpSocket } from "./middleware/socket.js";
 import { createAdapter } from "@socket.io/redis-streams-adapter";
-import redis from './utils/redis.config.js'
+import redis from "./utils/redis.config.js";
 
 // connecting to DB
 const DB_URL = process.env.DB_URL;
+
 connectDB(DB_URL);
 
 const app = express();
 
 // middle ware
-const allowedOrigins = [
-  "http://localhost:5173",
-];
+const allowedOrigins = ["http://localhost:5173"];
 app.use(cookieParser());
-app.use(cors(
-  {
+app.use(
+  cors({
     origin: function (origin, callback) {
       // allow requests with no origin
       // (like mobile apps or curl requests)
@@ -39,8 +38,8 @@ app.use(cors(
       return callback(null, true);
     },
     credentials: true,
-  }
-));
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const server = http.createServer(app);
@@ -49,13 +48,12 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: ["http://localhost:5173"], // allow to localhost only
-    credentials:true
+    credentials: true,
   },
-  adapter:createAdapter(redis)
+  adapter: createAdapter(redis),
 });
 setUpSocket(io);
 export { io };
-
 
 const PORT = process.env.PORT || 8080;
 

@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from "../../ui/dialog";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createChatSchema,
   createChatSchemaType,
-} from "../../validations/groupChatValidation";
-import { Button } from "../ui/button";
+} from "../../../validations/groupChatValidation";
+import { Button } from "../../ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { createChatGroup } from "./groupChatServices";
-import type { AppDispatch, RootState } from "../../store/store"; // Import AppDispatch type
-import { useUser } from "../../utils/criticalState";
-import Loader from "../common/Loader";
+import { createChatGroup } from "../services/groupChatServices";
+import type { AppDispatch, RootState } from "../../../store/store"; // Import AppDispatch type
+import { useUser } from "../../../utils/criticalState";
+import Loader from "../../common/Loader";
 
 
 const CreateChatGroup: React.FC = () => {
@@ -51,8 +51,9 @@ const CreateChatGroup: React.FC = () => {
     }
   };
 
+ 
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button onClick={()=>setOpen(true)}>Create Chat</Button>
       </DialogTrigger>
@@ -84,7 +85,7 @@ const CreateChatGroup: React.FC = () => {
             </Button>
           </div>
         </form>
-      </DialogContent>
+      </DialogContent >
     </Dialog>
   );
 };

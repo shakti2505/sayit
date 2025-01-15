@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import DashNav from "./DashNav";
-import CreateChatGroup from "../groupChat/CreateChatGroup";
-import GroupChatCard from "../groupChat/GroupChatCard";
+import CreateChatGroup from "../groupChat/pages/CreateChatGroup";
+import GroupChatCard from "../groupChat/pages/GroupChatCard";
 
 
 const Dashboard: React.FC = () => {

@@ -16,20 +16,20 @@ router.get("/google", googleLogin);
 
 // chat group route
 
-router.post("/create-chat-group", authMiddleware, createGroup);
+// router.post("/create-chat-group", authMiddleware, createGroup);
 
-// getAllGroupOfUser
+// // getAllGroupOfUser
 
-router.get("/chat-groups", authMiddleware, getAllGroupOfUser);
+// router.get("/chat-groups", authMiddleware, getAllGroupOfUser);
 
-// get group by Id
+// // get group by Id
 
-router.get("/chat-group/:id", authMiddleware, getGroupById);
+// router.get("/chat-group/:id", authMiddleware, getGroupById);
 
-// update group
-router.put("/chat-group-update/:id", authMiddleware, updateGroup);
+// // update group
+// router.put("/chat-group-update/:id", authMiddleware, updateGroup);
 
-// delete group
+// // delete group
 
-router.delete("/delete-group/:id", authMiddleware, deleteGroup);
+// router.delete("/delete-group/:id", authMiddleware, deleteGroup);
 export default router;

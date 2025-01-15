@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // validation schema for groupchat
-export const createChatSchema = z
+export const AddNewUserToGroupSchema = z
   .object({
     name: z
       .string()
@@ -10,5 +10,5 @@ export const createChatSchema = z
   })
   .required();
 
-export type createChatSchemaType = z.infer<typeof createChatSchema>;
+export type AddNewUserToGroupSchemaType = z.infer<typeof AddNewUserToGroupSchema>;
 

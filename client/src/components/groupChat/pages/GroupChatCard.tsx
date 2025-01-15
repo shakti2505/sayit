@@ -1,12 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../store/store"; // Import AppDispatch type
-import { deleteGroup, getGroups } from "./groupChatServices";
+import type { AppDispatch, RootState } from "../../../store/store"; // Import AppDispatch type
+import { deleteGroup, getGroups } from "../services/groupChatServices";
 import { Loader } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { toast } from "sonner";
+import EditGroup from "./EditGroup";
+import { useNavigate } from "react-router-dom";
+// import arrowSvg from "../../assets/arrow_upright.svg";
 
 const GroupChatCard: React.FC = () => {
+  
+  const navigate = useNavigate();
+  const [openEditDialog, setOpenEditDiolog] = useState(false);
+  const [openGroupToEditId, setOpenGroupToEditId] = useState("");
   const useAppDispatch: () => AppDispatch = useDispatch;
   const dispatch = useAppDispatch(); // Typed dispatch
   const { data } = useSelector(
@@ -21,17 +28,22 @@ const GroupChatCard: React.FC = () => {
     }
   };
 
+  const handleOpenEditGroup = (id: string) => {
+    setOpenGroupToEditId(id);
+    setOpenEditDiolog(true);
+  };
+
   useEffect(() => {
     dispatch(getGroups());
   }, []);
 
   return (
-    <div className="flex flex-col  items-center justify-center gap-2">
+    <div className="flex flex-wrap gap-2 border-1 ">
       {data ? (
         data.map((item) => {
           return (
             <React.Fragment key={item.group_id}>
-              <div className="flex-1 card font-sans bg-white rounded-lg overflow-hidden w-96 transform transition duration-500 hover:shadow-2xl">
+              <div className=" card font-sans bg-white rounded-lg overflow-hidden w-96 transform transition duration-500 hover:shadow-2xl">
                 <div className="p-4 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white">
                   <div className="flex justify-between items-center">
                     <div className="text-lg font-montserrat font-bold">
@@ -54,6 +66,7 @@ const GroupChatCard: React.FC = () => {
                         </svg>
                       </Button>
                       <Button
+                        onClick={() => handleOpenEditGroup(item._id)}
                         variant="default"
                         className="hover:text-gray-200 hover:scale-75 transition-transform duration-300 ease-in-out hover"
                       >
@@ -67,29 +80,60 @@ const GroupChatCard: React.FC = () => {
                           />
                         </svg>
                       </Button>
+                      <Button
+                        variant="default"
+                        className="hover:text-gray-200 hover:scale-75 transition-transform duration-300 ease-in-out hover"
+                        onClick={() => navigate(`/chats/${item.group_id}`)}
+                      >
+                        <svg
+                          width="256px"
+                          height="256px"
+                          viewBox="-2.4 -2.4 28.80 28.80"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          stroke="#ffffff"
+                          stroke-width="0.792"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          className="feather feather-arrow-up-right"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                          </g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                          </g>
+                        </svg>
+                      </Button>
                     </div>
                   </div>
                 </div>
                 <div className="p-6 font-montserrat">
                   <div className="text-black text-xl font-bold mb-2">
-                    Advanced 3D Card
+                    Group Bio
                   </div>
-                  <div className="text-gray-700 mb-4">
+                  {/* <div className="text-gray-700 mb-4">
                     This card showcases complex animations and 3D effects using
                     Tailwind CSS. Hover to see the interaction!
-                  </div>
-                  <a
+                  </div> */}
+                  {/* <a
                     href="#"
                     className="inline-block font-mono text-sm font-bold bg-slate-500 text-white py-2 px-4 rounded-full transition duration-100 transform hover:opacity-75"
                   >
                     Learn More
-                  </a>
+                  </a> */}
                 </div>
-                <div className="p-4 bg-gray-100 text-center">
+                {/* <div className="p-4 bg-gray-100 text-center">
                   <div className="text-gray-600 font-mono text-sm">
                     © 2024 Your Company
                   </div>
-                </div>
+                 
+                </div> */}
               </div>
             </React.Fragment>
           );
@@ -97,6 +141,12 @@ const GroupChatCard: React.FC = () => {
       ) : (
         <Loader />
       )}
+      <EditGroup
+        openEditDialog={openEditDialog}
+        groupId={openGroupToEditId}
+        passcode=""
+        setOpenEditDiolog={setOpenEditDiolog}
+      />
     </div>
   );
 };

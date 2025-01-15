@@ -38,8 +38,9 @@ export const getAllGroupOfUser = async (req, res) => {
 export const getGroupById = async (req, res) => {
   try {
     const { id } = req.params;
-    const group = await ChatGroupModal.findById(id);
-
+    const group = await ChatGroupModal.find({
+      group_id: id,
+    });
     return res
       .status(200)
       .json({ message: "Chat Group fetched successfully", data: group });
@@ -59,7 +60,6 @@ export const updateGroup = async (req, res) => {
       { $set: { name: name, passcode: passcode } },
       { new: true } // return the updated document
     );
-
     return res
       .status(201)
       .json({ message: "Group updated successfully", data: updatedGroup });
@@ -74,7 +74,7 @@ export const updateGroup = async (req, res) => {
 export const deleteGroup = async (req, res) => {
   try {
     const { id } = req.params;
-    await ChatGroupModal.findByIdAndDelete(id)
+    await ChatGroupModal.findByIdAndDelete(id);
     return res.status(200).json({ message: "Group Deleted successfully" });
   } catch (error) {
     console.log(error);

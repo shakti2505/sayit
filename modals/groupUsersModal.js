@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { v4 as uuidv4 } from 'uuid';
-import ChatGroupModal from "./chatGroupModal";
+import ChatGroupModal from "./chatGroupModal.js";
 
 const groupUsers = new mongoose.Schema({
   name: {
@@ -10,7 +10,6 @@ const groupUsers = new mongoose.Schema({
   chatgroup: {
     type: mongoose.Schema.Types.ObjectId,
     ref: ChatGroupModal,
-    onDelete: "CASCADE",
     required: true,
   },
   group_id: {

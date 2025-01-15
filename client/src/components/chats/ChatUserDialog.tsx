@@ -1,0 +1,117 @@
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../../components/ui/dialog";
+
+import { Button } from "../ui/button";
+import { addNewUserToGroup } from "./services/chatGroupServices";
+
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../store/store"; // Import AppDispatch type
+
+import { Input } from "../ui/input";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
+
+interface Props {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+}
+
+const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
+  const { group_id } = useParams();
+  const [newUser, setNewUser] = useState({
+    name: "",
+    passcode: "",
+  });
+
+  const { data } = useSelector(
+    (ChatGroups: RootState) => ChatGroups.getGroupByID
+  );
+
+  const useAppDispatch: () => AppDispatch = useDispatch;
+  const dispatch = useAppDispatch(); // Typed dispatch
+
+  // this function when hitting will check if the local store has data added User stored if not then it will store the new user,if passcode matched
+  const onSubmit = async () => {
+    const localData = localStorage.getItem(group_id as string);
+    if (!localData) {
+      try {
+        if (!group_id) {
+          toast.error("Group ID is missing");
+          return;
+        }
+        let payload = {
+          name: newUser.name,
+          group_id: group_id as string,
+          chatgroup: data[0]._id,
+        };
+        const res = await dispatch(addNewUserToGroup(payload));
+        if (res.message === "User added Successfully in group.") {
+          setOpen(false);
+        }
+        localStorage.setItem(group_id as string, JSON.stringify(res.data));
+      } catch (error) {
+        toast.error("Something went wrong please try again");
+      }
+    }
+
+    // checing if passcode matches with the entered passcode;
+    if (data[0].passcode !== newUser.passcode) {
+      toast.error("Please enter correct passcode");
+    } else {
+      setOpen(false);
+    }
+  };
+
+  // checking if user is already in added in the group then dialog to add a new user to group will not appear
+  useEffect(() => {
+    if (group_id) {
+      const data = localStorage.getItem(group_id);
+      if (data) {
+        const JsonData = JSON.parse(data);
+        if (JsonData?.name && JsonData?.group_id) {
+          setOpen(false);
+        }
+      }
+    }
+  }, []);
+
+  return (
+    <Dialog open={open} >
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add Name and Passcode</DialogTitle>
+          <DialogDescription>
+            Add your name and passcode to join in room
+          </DialogDescription>
+        </DialogHeader>
+        <div className="mt-2">
+            <Input
+              placeholder="Enter your name"
+              value={newUser.name}
+              onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+            />
+          </div>
+          <div className="mt-2">
+            <Input
+              placeholder="Enter your passcode"
+              value={newUser.passcode}
+              onChange={(e) =>
+                setNewUser({ ...newUser, passcode: e.target.value })
+              }
+            />
+          </div>
+          <div className="mt-2">
+            <Button className="w-full" onClick={onSubmit}>Submit</Button>
+          </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default ChatUserDialog;
