@@ -27,13 +27,11 @@ function App() {
          <Route
           path="/chats/:group_id"
           element={
-            <ProtectedRoute>
-              <ChatPage />
-            </ProtectedRoute>
+            <ChatPage />
           }
         />
       </Routes>
-          <Toaster richColors duration={1000}/>
+          <Toaster richColors duration={10000}/>
     </Provider>
   );
 }

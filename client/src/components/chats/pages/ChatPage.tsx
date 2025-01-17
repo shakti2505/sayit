@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import ChatBase from "./ChatBase";
 import { useNavigate, useParams } from "react-router-dom";
-import { getGroupChatByID } from "../services/chatGroupServices";
+import { getGroupsByID } from "../services/chatGroupServices";
 import type { AppDispatch } from "../../../store/store"; // Import AppDispatch type
 import { useDispatch } from "react-redux";
+import { getGroupChatsByID } from "../services/groupChatsServices";
 
 interface ChatPageProps {}
 
@@ -15,16 +16,17 @@ const ChatPage: React.FC<ChatPageProps> = () => {
   // fetching groups chat by id
 
   useEffect(() => {
-    if (!group_id || group_id.length !== 36) {
+    if (!group_id) {
       navigate("/not-found");
     }
   }, [group_id, navigate]);
 
   useEffect(() => {
     if (group_id) {
-      dispatch(getGroupChatByID(group_id));
+      dispatch(getGroupsByID(group_id));
+      dispatch(getGroupChatsByID(group_id));
     }
-  }, []);
+  }, [group_id]);
 
   return (
     <div>

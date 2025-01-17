@@ -24,7 +24,7 @@ import {
 } from "../slices/AddNewUserToGroupSlice";
 
 // get group by ID (public);
-export const getGroupChatByID =
+export const getGroupsByID =
   (id: string) => async (dispatch: AppDispatch) => {
     dispatch(getGroupByIdStart());
     try {
@@ -72,7 +72,7 @@ export const addNewUserToGroup =
     dispatch(addNewUserToGroup_start());
     try {
       const { data } = await axios.post(ADD_NEW_USER_TO_GROUP, { ...payload });
-      dispatch(addNewUserToGroup_success(data));
+      dispatch(addNewUserToGroup_success(data.data));
       toast.success(data.message);
       return data;
     } catch (error) {

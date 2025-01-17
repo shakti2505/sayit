@@ -15,9 +15,9 @@ const ChatNav: React.FC = () => {
           <MobileChatSidebar />
         </div>
         <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-400 to-purple-600 text-transparent bg-clip-text">
-          {data[0]?.name}
+          {data?.name}
         </h1>
-        {/* <p>{new Date(chatGroup.created_at).toDateString()}</p> */}
+        {/* <p></p> */}
       </div>
       <p>{}</p>
     </nav>

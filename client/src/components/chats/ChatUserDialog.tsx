@@ -8,7 +8,10 @@ import {
 } from "../../components/ui/dialog";
 
 import { Button } from "../ui/button";
-import { addNewUserToGroup } from "./services/chatGroupServices";
+import {
+  addNewUserToGroup,
+  // getAllGroupUsers,
+} from "./services/chatGroupServices";
 
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/store"; // Import AppDispatch type
@@ -39,7 +42,7 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
   // this function when hitting will check if the local store has data added User stored if not then it will store the new user,if passcode matched
   const onSubmit = async () => {
     const localData = localStorage.getItem(group_id as string);
-    if (!localData) {
+    if (!localData || localData == null) {
       try {
         if (!group_id) {
           toast.error("Group ID is missing");
@@ -48,11 +51,13 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
         let payload = {
           name: newUser.name,
           group_id: group_id as string,
-          chatgroup: data[0]._id,
+          chatgroup: data?._id?.toString() || "",
         };
+        
         const res = await dispatch(addNewUserToGroup(payload));
         if (res.message === "User added Successfully in group.") {
           setOpen(false);
+          // dispatch(getAllGroupUsers(group_id));
         }
         localStorage.setItem(group_id as string, JSON.stringify(res.data));
       } catch (error) {
@@ -61,7 +66,8 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
     }
 
     // checing if passcode matches with the entered passcode;
-    if (data[0].passcode !== newUser.passcode) {
+
+    if (data?.passcode !== newUser.passcode) {
       toast.error("Please enter correct passcode");
     } else {
       setOpen(false);
@@ -74,7 +80,7 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
       const data = localStorage.getItem(group_id);
       if (data) {
         const JsonData = JSON.parse(data);
-        if (JsonData?.name && JsonData?.group_id) {
+        if (JsonData?.name && JsonData?.chatgroup) {
           setOpen(false);
         }
       }
@@ -82,7 +88,7 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
   }, []);
 
   return (
-    <Dialog open={open} >
+    <Dialog open={open}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add Name and Passcode</DialogTitle>
@@ -91,24 +97,26 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
           </DialogDescription>
         </DialogHeader>
         <div className="mt-2">
-            <Input
-              placeholder="Enter your name"
-              value={newUser.name}
-              onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-            />
-          </div>
-          <div className="mt-2">
-            <Input
-              placeholder="Enter your passcode"
-              value={newUser.passcode}
-              onChange={(e) =>
-                setNewUser({ ...newUser, passcode: e.target.value })
-              }
-            />
-          </div>
-          <div className="mt-2">
-            <Button className="w-full" onClick={onSubmit}>Submit</Button>
-          </div>
+          <Input
+            placeholder="Enter your name"
+            value={newUser.name}
+            onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+          />
+        </div>
+        <div className="mt-2">
+          <Input
+            placeholder="Enter your passcode"
+            value={newUser.passcode}
+            onChange={(e) =>
+              setNewUser({ ...newUser, passcode: e.target.value })
+            }
+          />
+        </div>
+        <div className="mt-2">
+          <Button className="w-full" onClick={onSubmit}>
+            Submit
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );

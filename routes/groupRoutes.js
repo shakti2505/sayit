@@ -11,6 +11,7 @@ import {
   getGroupUsers,
   storeUsersInGroup,
 } from "../controller/chatGroupUserController.js";
+import { getGroupChats } from "../controller/chatsController.js";
 
 const router = express.Router();
 
@@ -37,4 +38,7 @@ router.delete("/delete-group/:id", authMiddleware, deleteGroup);
 router.get("/chat-group-users/:group_id", getGroupUsers);
 
 router.post("/create-chat-group-user", storeUsersInGroup);
+
+// group chats route
+router.get("/get-group-chats/:group_id", getGroupChats);
 export default router;

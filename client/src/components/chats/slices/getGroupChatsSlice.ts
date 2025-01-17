@@ -1,21 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface groupChats {
-  group: string;
+interface getGroupChats {
   group_id: string;
   message: string;
   name: string;
 }
 [];
 
-interface groupChatState {
-  data: Array<groupChats>;
+interface getGroupChatState {
+  data: Array<getGroupChats>;
   loading: boolean;
   error: string | null;
 }
 
 // initita state
-const initialState: groupChatState = {
+const initialState: getGroupChatState = {
   data: [],
   loading: false,
   error: null,
@@ -26,19 +25,19 @@ const groupChatsSlice = createSlice({
   name: "groupChats",
   initialState,
   reducers: {
-    groupChatStart: (state) => {
+    getGroupChatStart: (state) => {
       (state.loading = true), (state.error = null);
     },
-    groupChatsuccess: (state, action: PayloadAction<Array<groupChats>>) => {
+    getGroupChatsuccess: (state, action: PayloadAction<Array<getGroupChats>>) => {
       (state.loading = false), (state.data = action.payload);
     },
-    groupChatfailure: (state, action: PayloadAction<string>) => {
+    getGroupChatfailure: (state, action: PayloadAction<string>) => {
       (state.loading = false), (state.error = action.payload);
     },
   },
 });
 
-export const { groupChatStart, groupChatfailure, groupChatsuccess } =
+export const {getGroupChatStart, getGroupChatsuccess, getGroupChatfailure } =
   groupChatsSlice.actions;
 export default groupChatsSlice.reducer;
-export type { groupChatState };
+export type { getGroupChatState };

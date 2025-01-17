@@ -5,15 +5,14 @@ import GroupUsersModal from "../modals/groupUsersModal.js";
 export const getGroupUsers = async (req, res) => {
   try {
     const { group_id } = req.params;
-    console.log("group_id", group_id);
     const users = await GroupUsersModal.find({
-      group_id: group_id,
+      chatgroup: group_id,
     }).sort({ createdAt: -1 });
-    console.log(users);
     return res
       .status(200)
       .json({ message: "Group Users Fetched Successfully.", data: users });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -23,16 +22,16 @@ export const getGroupUsers = async (req, res) => {
 export const storeUsersInGroup = async (req, res) => {
   try {
     const { name, chatgroup, group_id } = req.body;
-
-   const user =  await GroupUsersModal.create({
+    const user = await GroupUsersModal.create({
       name,
       chatgroup,
-      group_id,
     });
+    console.log(user);
     return res
       .status(200)
-      .json({ message: "User added Successfully in group.", data:user });
+      .json({ message: "User added Successfully in group.", data: user });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };

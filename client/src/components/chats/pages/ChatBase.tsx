@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import ChatSidebar from "../ChatSideBar";
 import ChatNav from "../ChatNav";
 import ChatUserDialog from "../ChatUserDialog";
+import GroupChats from "./groupChats";
 
 export const ChatBase = () => {
   const { group_id } = useParams();
@@ -50,6 +51,7 @@ export const ChatBase = () => {
         ) : (
           <ChatNav />
         )}
+        <GroupChats />
       </div>
     </div>
   );

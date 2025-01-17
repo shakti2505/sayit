@@ -38,9 +38,7 @@ export const getAllGroupOfUser = async (req, res) => {
 export const getGroupById = async (req, res) => {
   try {
     const { id } = req.params;
-    const group = await ChatGroupModal.find({
-      group_id: id,
-    });
+    const group = await ChatGroupModal.findById(id);
     return res
       .status(200)
       .json({ message: "Chat Group fetched successfully", data: group });

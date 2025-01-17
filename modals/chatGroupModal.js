@@ -3,12 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import User from "./userModal.js";
 
 const chatGroup = new mongoose.Schema({
-  group_id: {
-    type: String,
-    required: true,
-    unique: true,
-    default: () => uuidv4(), 
-  },
   name: {
     type: String,
     required: true,

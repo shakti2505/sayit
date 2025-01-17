@@ -1,17 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface groupData {
-  _id:string;
+  _id: string;
   group_id: string;
   name: string;
   user_id: string;
   passcode: string;
   created_At: string;
 }
-[];
 
 interface ChatGroupState {
-  data: Array<groupData>;
+  data: groupData | null;
   loading: boolean;
   error: string | null;
 }
@@ -20,7 +19,7 @@ interface ChatGroupState {
 
 // initial state
 const initialState: ChatGroupState = {
-  data: [],
+  data: null,
   loading: false,
   error: null,
 };
@@ -32,7 +31,7 @@ const getGroupByIdSlice = createSlice({
     getGroupByIdStart: (state) => {
       (state.loading = true), (state.error = null);
     },
-    getGroupByIdSuccess: (state, action: PayloadAction<Array<groupData>>) => {
+    getGroupByIdSuccess: (state, action: PayloadAction<groupData>) => {
       (state.loading = false), (state.data = action.payload);
     },
     getGroupByIdFailure: (state, action: PayloadAction<string>) => {

@@ -12,12 +12,6 @@ const groupUsers = new mongoose.Schema({
     ref: ChatGroupModal,
     required: true,
   },
-  group_id: {
-    type: String,
-    required: true,
-    unique: true,
-    default: () => uuidv4(),
-  },
   createdAt: {
     type: Date,
     default: new Date(),

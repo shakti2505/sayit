@@ -83,7 +83,7 @@ const GroupChatCard: React.FC = () => {
                       <Button
                         variant="default"
                         className="hover:text-gray-200 hover:scale-75 transition-transform duration-300 ease-in-out hover"
-                        onClick={() => navigate(`/chats/${item.group_id}`)}
+                        onClick={() => navigate(`/chats/${item._id}`)}
                       >
                         <svg
                           width="256px"

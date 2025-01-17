@@ -9,17 +9,29 @@ import getChatGroupReducer, {
 import updateChatGroupReducer, {
   UpdateChatGroupState,
 } from "../components/groupChat/slices/updateChatGroupSlice";
-import getChatGroupByIdReducer, {ChatGroupState} from '../components/chats/slices/ChatGroupByIdSlice';
-import getAllChatGroup_reducer, {ChatGroupUserState} from '../components/chats/slices/ChatGroupUserSlice';
+import getChatGroupByIdReducer, {
+  ChatGroupState,
+} from "../components/chats/slices/ChatGroupByIdSlice";
+import getAllChatGroup_reducer, {
+  ChatGroupUserState,
+} from "../components/chats/slices/ChatGroupUserSlice";
+import getAddNewUsertoGroupReducer, {
+  NewUserState,
+} from "../components/chats/slices/AddNewUserToGroupSlice";
 
+import getChatsReducer, {
+  getGroupChatState,
+} from "../components/chats/slices/getGroupChatsSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   createChatGroupApi: createChatGroupReducer,
   getChatGroup: getChatGroupReducer,
   updateGroup: updateChatGroupReducer,
-  getGroupByID:getChatGroupByIdReducer,
-  getAllGroupUsers:getAllChatGroup_reducer
+  getGroupByID: getChatGroupByIdReducer,
+  getAllGroupUsers: getAllChatGroup_reducer,
+  addNewUserToGroup: getAddNewUsertoGroupReducer,
+  getGroupChat: getChatsReducer,
 });
 
 export default rootReducer;
@@ -30,7 +42,8 @@ export interface RootState {
   createChatGroup: CreateChatGroupState;
   getChatGroup: ChatGroups;
   updateGroupState: UpdateChatGroupState;
-  getGroupByIdState:ChatGroupState
-  getAllGroupUsersState:ChatGroupUserState
-  
+  getGroupByIdState: ChatGroupState;
+  getAllGroupUsersState: ChatGroupUserState;
+  addNewUserToState: NewUserState;
+  getGroupChatState: getGroupChatState;
 }

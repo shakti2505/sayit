@@ -1,10 +1,8 @@
 import mongoose from "mongoose";
-import ChatGroupModal from "./chatGroupModal.js";
 
 const groupChatSchema = new mongoose.Schema({
-  group_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: ChatGroupModal,
+  chat_groupUUID: {
+    type: String,
     required: true,
   },
   message: String,
