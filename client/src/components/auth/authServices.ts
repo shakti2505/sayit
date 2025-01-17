@@ -7,6 +7,7 @@ interface GoogleAuthResponse {
     name: string;
     email: string;
     image: string;
+    _id:string;
   };
   token: string;
 }

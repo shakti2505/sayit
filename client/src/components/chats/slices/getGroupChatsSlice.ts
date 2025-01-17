@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface getGroupChats {
+  _id: string;
+  sender_id: string;
+  createdAt: Date;
   group_id: string;
   message: string;
   name: string;
+  isRead:boolean,
+  isReceived:boolean,
 }
 [];
 
@@ -28,7 +33,10 @@ const groupChatsSlice = createSlice({
     getGroupChatStart: (state) => {
       (state.loading = true), (state.error = null);
     },
-    getGroupChatsuccess: (state, action: PayloadAction<Array<getGroupChats>>) => {
+    getGroupChatsuccess: (
+      state,
+      action: PayloadAction<Array<getGroupChats>>
+    ) => {
       (state.loading = false), (state.data = action.payload);
     },
     getGroupChatfailure: (state, action: PayloadAction<string>) => {
@@ -37,7 +45,7 @@ const groupChatsSlice = createSlice({
   },
 });
 
-export const {getGroupChatStart, getGroupChatsuccess, getGroupChatfailure } =
+export const { getGroupChatStart, getGroupChatsuccess, getGroupChatfailure } =
   groupChatsSlice.actions;
 export default groupChatsSlice.reducer;
 export type { getGroupChatState };

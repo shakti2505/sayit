@@ -39,6 +39,8 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
   const useAppDispatch: () => AppDispatch = useDispatch;
   const dispatch = useAppDispatch(); // Typed dispatch
 
+  const logged_in_user = JSON.parse(localStorage.getItem("user") || "");
+
   // this function when hitting will check if the local store has data added User stored if not then it will store the new user,if passcode matched
   const onSubmit = async () => {
     const localData = localStorage.getItem(group_id as string);
@@ -49,11 +51,12 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
           return;
         }
         let payload = {
+          user_id: logged_in_user.id,
           name: newUser.name,
           group_id: group_id as string,
           chatgroup: data?._id?.toString() || "",
         };
-        
+
         const res = await dispatch(addNewUserToGroup(payload));
         if (res.message === "User added Successfully in group.") {
           setOpen(false);

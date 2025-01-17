@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
+  _id: string;
   user: string;
   image: string;
   token: string;
@@ -8,6 +9,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
+  _id: "",
   user: "",
   image: "",
   email: "",
@@ -25,8 +27,10 @@ const authSlice = createSlice({
         token: string;
         image: string;
         email: string;
+        _id: string;
       }>
     ) {
+      state._id = action.payload._id;
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.image = action.payload.image;
@@ -38,6 +42,7 @@ const authSlice = createSlice({
       state.email = "";
       state.image = "";
       state.token = "";
+      state._id = "";
     },
   },
 });

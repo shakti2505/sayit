@@ -21,10 +21,11 @@ export const getGroupUsers = async (req, res) => {
 
 export const storeUsersInGroup = async (req, res) => {
   try {
-    const { name, chatgroup, group_id } = req.body;
+    const { name, chatgroup, user_id } = req.body;
     const user = await GroupUsersModal.create({
       name,
       chatgroup,
+      user_id,
     });
     console.log(user);
     return res

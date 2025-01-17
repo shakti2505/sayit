@@ -19,13 +19,23 @@ export const setUpSocket = (io) => {
     // join the room
     socket.join(socket.room);
 
-    socket.on("message", async (data) => {
+    // capturing "message" event from the triggerd by client and extracting data and saving messsages to database.
+    socket.on("message", async (data, callback) => {
       // socket.broadcast.emit("message", data);
       await groupChatModal.create({
         group: data.group,
-        chat_groupUUID: data.group_id,
+        group_id: data.group_id,
         message: data.message,
         name: data.name,
+        sender_id: data.sender_id,
+        isRead: data.isRead,
+        isReceived: true,
+      });
+
+      // sending acknowledgement to client after successfully receiving message.
+      callback({
+        status: "Message Received",
+        message_id: _id,
       });
 
       // emitting the message to the room

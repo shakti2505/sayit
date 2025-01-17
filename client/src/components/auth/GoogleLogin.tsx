@@ -1,31 +1,38 @@
 import React from "react";
 import { useGoogleLogin, CodeResponse } from "@react-oauth/google";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { googleAuth } from "./authServices";
 import { Button } from "../ui/button";
-import googlesvg from '../../assets/images/google.png'
-import {AppDispatch, } from  '../../store/store';
+import googlesvg from "../../assets/images/google.png";
+import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
-import {login} from '../../components/auth/authSlices'
-
+import { login } from "../../components/auth/authSlices";
 
 const GoogleLogin: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
 
   const responseGoogle = async (authResponse: CodeResponse) => {
     try {
       if (authResponse["code"]) {
         // Use the separated service for Google authentication
         const result = await googleAuth(authResponse["code"]);
-        const { name, email, image } = result.user;
-        // Dispatch the login action
-        dispatch(login({
-          user: name, email, image,
-          token: result.token
-        }));
+        const { name, email, image, _id } = result.user;
+        // Dispatch the n action
+        dispatch(
+          login({
+            email,
+            image,
+            _id,
+            token: result.token,
+            user: name,
+          })
+        );
         // Save the user data to the local storage
-        localStorage.setItem("user", JSON.stringify({ name, email, image, token: result.token }));
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ name, email, image, token: result.token, id: _id })
+        );
         // Redirect to the home page
         navigate("/dashboard");
       }

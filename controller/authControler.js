@@ -24,14 +24,14 @@ export const googleLogin = async (req, res) => {
         image: picture,
       });
     }
-    const { _id } = user;
+    const { _id } = user
     // creating jwt token to pass it to the client
     const token = Jwt.sign({ _id, email }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_TIMEOUT,
     });
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 5000 });
 
-    return res.status(200).json({ message: "success", token, user });
+    return res.status(200).json({ message: "success", token, user, user_id:_id });
   } catch (err) {
     res.status(500).json({ message: "Internal Server error" });
   }

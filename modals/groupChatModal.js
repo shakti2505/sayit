@@ -1,12 +1,28 @@
 import mongoose from "mongoose";
+import UserModal from "./userModal.js";
 
 const groupChatSchema = new mongoose.Schema({
-  chat_groupUUID: {
+  sender_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: UserModal,
+    required: true,
+  },
+  group_id: {
     type: String,
     required: true,
   },
   message: String,
   name: String,
+  isRead: {
+    type: Boolean,
+    required: true,
+    default:false,
+  },
+  isReceived: {
+    type: Boolean,
+    required: true,
+    default:false
+  },
   createdAt: {
     type: Date,
     default: new Date(),

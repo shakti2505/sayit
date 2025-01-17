@@ -1,8 +1,13 @@
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from 'uuid';
 import ChatGroupModal from "./chatGroupModal.js";
+import UserModal from "./userModal.js";
 
 const groupUsers = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: UserModal,
+    required: true,
+  },
   name: {
     type: String,
     required: true,

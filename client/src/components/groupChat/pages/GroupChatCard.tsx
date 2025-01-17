@@ -43,7 +43,7 @@ const GroupChatCard: React.FC = () => {
         data.map((item) => {
           return (
             <React.Fragment key={item.group_id}>
-              <div className=" card font-sans bg-white rounded-lg overflow-hidden w-96 transform transition duration-500 hover:shadow-2xl">
+              <div className=" card font-sans bg-white rounded-lg overflow-hidden w-96 transform transition duration-500 hover:shadow-xl">
                 <div className="p-4 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white">
                   <div className="flex justify-between items-center">
                     <div className="text-lg font-montserrat font-bold">

@@ -65,6 +65,7 @@ type payload = {
   name: string;
   group_id: string;
   chatgroup: string;
+  user_id:string,
 };
 
 export const addNewUserToGroup =
