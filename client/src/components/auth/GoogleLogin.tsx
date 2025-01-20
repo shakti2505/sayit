@@ -1,6 +1,6 @@
 import React from "react";
 import { useGoogleLogin, CodeResponse } from "@react-oauth/google";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { googleAuth } from "./authServices";
 import { Button } from "../ui/button";
 import googlesvg from "../../assets/images/google.png";
@@ -11,6 +11,8 @@ import { login } from "../../components/auth/authSlices";
 const GoogleLogin: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const [searchParams] = useSearchParams();
+  const groupid = searchParams.get("gorup_id");
 
   const responseGoogle = async (authResponse: CodeResponse) => {
     try {
@@ -34,7 +36,12 @@ const GoogleLogin: React.FC = () => {
           JSON.stringify({ name, email, image, token: result.token, id: _id })
         );
         // Redirect to the home page
-        navigate("/dashboard");
+        if (groupid) {
+          alert("redirecting to chat page")
+          navigate(`/chats/${groupid}`);
+        } else {
+          navigate("/dashboard");
+        }
       }
     } catch (err) {
       console.log("Error during Google login:", err);

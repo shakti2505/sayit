@@ -6,9 +6,8 @@ import Dashboard from "./components/dashboard/Dashboard";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import ProtectedRoute from "./utils/ProtectedRoute";
-import { Toaster } from '../src/components/ui/sonner'
+import { Toaster } from "../src/components/ui/sonner";
 import ChatPage from "./components/chats/pages/ChatPage";
-
 
 function App() {
   return (
@@ -24,14 +23,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-         <Route
+        <Route
           path="/chats/:group_id"
           element={
             <ChatPage />
           }
         />
       </Routes>
-          <Toaster richColors duration={10000}/>
+      <Toaster richColors duration={1000} />
     </Provider>
   );
 }

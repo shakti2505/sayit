@@ -9,6 +9,7 @@ import GroupChats from "./groupChats";
 export const ChatBase = () => {
   const { group_id } = useParams();
   const [openAddNewUserDialog, setopenAddNewUserDialog] = useState(true);
+  const [searchMessage, setSearchMessage]  = useState('');
 
   let socket = useMemo(() => {
     const socket = getSocket();
@@ -49,9 +50,9 @@ export const ChatBase = () => {
             setOpen={setopenAddNewUserDialog}
           />
         ) : (
-          <ChatNav />
+          <ChatNav setSerchMessage={setSearchMessage} />
         )}
-        <GroupChats />
+        <GroupChats searchMessage={searchMessage} />
       </div>
     </div>
   );

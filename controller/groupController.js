@@ -79,3 +79,23 @@ export const deleteGroup = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+// generate group-link
+
+export const generate_group_link = (req, res) => {
+  const { group_id } = req.params;
+  try {
+    if (!group_id) {
+      return res.status(400).json({ message: "Group Id is not found" });
+    }
+
+    const baseURL = "http://localhost:5173/chats";
+    const uniqueLink = `${baseURL}/${group_id}`;
+    return res.status(201).json({ link: uniqueLink });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Internal Server error, Please try again!" });
+  }
+};

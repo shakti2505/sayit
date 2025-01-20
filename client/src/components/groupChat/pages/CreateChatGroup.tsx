@@ -53,11 +53,11 @@ const CreateChatGroup: React.FC = () => {
 
  
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen} >
       <DialogTrigger asChild>
-        <Button onClick={()=>setOpen(true)}>Create Chat</Button>
+        <Button onClick={()=>setOpen(true)}>Create group</Button>
       </DialogTrigger>
-      <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+      <DialogContent onInteractOutside={(e) => e.preventDefault()} >
         <DialogHeader>
           <DialogTitle>Create Your new chat</DialogTitle>
         </DialogHeader>

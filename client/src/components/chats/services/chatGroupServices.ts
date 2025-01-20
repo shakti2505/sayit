@@ -13,6 +13,7 @@ import { AppDispatch } from "../../../store/store";
 import { toast } from "sonner";
 import {
   ADD_NEW_USER_TO_GROUP,
+  GENERATE_GROUP_LINK,
   GET_GROUP_CHAT_BY_ID_URL,
   GET_GROUP_USERS_BY_ID_URL,
 } from "../../../utilities/apiEndPoints";
@@ -24,20 +25,19 @@ import {
 } from "../slices/AddNewUserToGroupSlice";
 
 // get group by ID (public);
-export const getGroupsByID =
-  (id: string) => async (dispatch: AppDispatch) => {
-    dispatch(getGroupByIdStart());
-    try {
-      const { data } = await axios.get(GET_GROUP_CHAT_BY_ID_URL(id));
-      dispatch(getGroupByIdSuccess(data.data));
-      toast.success(data?.message);
-    } catch (error) {
-      dispatch(
-        getGroupByIdFailure(`Error in Fetching chats of group with IDL${id}`)
-      );
-      return error;
-    }
-  };
+export const getGroupsByID = (id: string) => async (dispatch: AppDispatch) => {
+  dispatch(getGroupByIdStart());
+  try {
+    const { data } = await axios.get(GET_GROUP_CHAT_BY_ID_URL(id));
+    dispatch(getGroupByIdSuccess(data.data));
+    toast.success(data?.message);
+  } catch (error) {
+    dispatch(
+      getGroupByIdFailure(`Error in Fetching chats of group with IDL${id}`)
+    );
+    return error;
+  }
+};
 
 // getAllGroupUser
 
@@ -65,7 +65,7 @@ type payload = {
   name: string;
   group_id: string;
   chatgroup: string;
-  user_id:string,
+  user_id: string;
 };
 
 export const addNewUserToGroup =
@@ -82,3 +82,15 @@ export const addNewUserToGroup =
       return error;
     }
   };
+
+export const generateGroupLink = async (groupID: string) => {
+  try {
+    const res = await axios.post(GENERATE_GROUP_LINK(groupID));
+    if (res.status !== 200) {
+      toast.error("unable to generate Link");
+    }
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -35,7 +35,6 @@ export const setUpSocket = (io) => {
       // sending acknowledgement to client after successfully receiving message.
       callback({
         status: "Message Received",
-        message_id: _id,
       });
 
       // emitting the message to the room

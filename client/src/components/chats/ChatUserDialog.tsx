@@ -10,14 +10,14 @@ import {
 import { Button } from "../ui/button";
 import {
   addNewUserToGroup,
-  // getAllGroupUsers,
+  getAllGroupUsers,
 } from "./services/chatGroupServices";
 
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/store"; // Import AppDispatch type
 
 import { Input } from "../ui/input";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 interface Props {
@@ -31,6 +31,8 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
     name: "",
     passcode: "",
   });
+  const [loggedInUserId, setLoggedInUserId] = useState("");
+  const navigate = useNavigate();
 
   const { data } = useSelector(
     (ChatGroups: RootState) => ChatGroups.getGroupByID
@@ -39,7 +41,7 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
   const useAppDispatch: () => AppDispatch = useDispatch;
   const dispatch = useAppDispatch(); // Typed dispatch
 
-  const logged_in_user = JSON.parse(localStorage.getItem("user") || "");
+  // const logged_in_user = JSON.parse(localStorage.getItem("user") || "");
 
   // this function when hitting will check if the local store has data added User stored if not then it will store the new user,if passcode matched
   const onSubmit = async () => {
@@ -51,7 +53,7 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
           return;
         }
         let payload = {
-          user_id: logged_in_user.id,
+          user_id: loggedInUserId,
           name: newUser.name,
           group_id: group_id as string,
           chatgroup: data?._id?.toString() || "",
@@ -60,7 +62,7 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
         const res = await dispatch(addNewUserToGroup(payload));
         if (res.message === "User added Successfully in group.") {
           setOpen(false);
-          // dispatch(getAllGroupUsers(group_id));
+          dispatch(getAllGroupUsers(group_id));
         }
         localStorage.setItem(group_id as string, JSON.stringify(res.data));
       } catch (error) {
@@ -81,14 +83,26 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
   useEffect(() => {
     if (group_id) {
       const data = localStorage.getItem(group_id);
+      const logged_in_user = localStorage.getItem("user") || "";
       if (data) {
         const JsonData = JSON.parse(data);
+        const user = JSON.parse(logged_in_user);
         if (JsonData?.name && JsonData?.chatgroup) {
           setOpen(false);
         }
+        if (user) {
+          setLoggedInUserId(user.id);
+        }
+        if (!logged_in_user) {
+          navigate(`/?gorup_id=${group_id}`);
+        }
+      }
+      const user = JSON.parse(logged_in_user);
+      if (user) {
+        setLoggedInUserId(user.id);
       }
     }
-  }, []);
+  }, [group_id]);
 
   return (
     <Dialog open={open}>

@@ -2,6 +2,7 @@ import express from "express";
 import {
   createGroup,
   deleteGroup,
+  generate_group_link,
   getAllGroupOfUser,
   getGroupById,
   updateGroup,
@@ -41,4 +42,7 @@ router.post("/create-chat-group-user", storeUsersInGroup);
 
 // group chats route
 router.get("/get-group-chats/:group_id", getGroupChats);
+
+// generate link route
+router.post('/generate-group-link/:group_id', generate_group_link);
 export default router;

@@ -10,9 +10,9 @@ const Dashboard: React.FC = () => {
     <>
       <DashNav />
       <div className="container">
-        <div className="flex justify-end mt-24 fixed  w-full">
+        {/* <div className="flex justify-end mt-24 fixed  w-full">
           <CreateChatGroup />
-        </div>
+        </div> */}
         <div className="flex mt-20 ">
         <GroupChatCard/>
         </div>

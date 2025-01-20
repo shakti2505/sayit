@@ -21,3 +21,7 @@ export const ADD_NEW_USER_TO_GROUP = API_URL + "/create-chat-group-user";
 export const GET_GROUP_CHATS_URL = (group_id:string) => {
   return API_URL + `/get-group-chats/${group_id}`;
 };
+export const GENERATE_GROUP_LINK = (group_id:string) => {
+  return API_URL + `/generate-group-link/${group_id}`;
+};
+

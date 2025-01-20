@@ -4,8 +4,6 @@
 
 /* ... */
 
-
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -62,3 +60,23 @@
   }
 }
 
+::-webkit-scrollbar{
+  width: 5px; /* For vertical scrollbars */
+  height: 12px; /* For horizontal scrollbars */
+
+}
+
+/* Track (background of scrollbar) */
+::-webkit-scrollbar-track {
+  background: #f4f4f5;
+}
+
+/* Handle (scroll thumb) */
+::-webkit-scrollbar-thumb {
+  background: #ccc5e1;
+  border-radius: 6px; /* Round edges */
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
