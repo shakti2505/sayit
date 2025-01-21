@@ -10,10 +10,14 @@ const UserSchema = new mongoose.Schema({
   image: {
     type: String,
   },
-  createdAt : {
+  public_key: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
     type: Date,
-    default: new Date()
-  }
+    default: new Date(),
+  },
 });
 
 const UserModal = mongoose.model("UserModal", UserSchema);

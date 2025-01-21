@@ -23,8 +23,12 @@ import {
   updateGroupSuccess,
   updateGroupFailure,
 } from "../slices/updateChatGroupSlice";
-// api call for the create chat group api
 
+// fetching public_key from localstorage
+const userData = localStorage.getItem("user");
+const logged_in_user_data = userData ? JSON.parse(userData) : null;
+
+// api call for the create chat group api
 export const createChatGroup =
   (payload: createChatSchemaType, token: string) =>
   async (dispatch: AppDispatch) => {
@@ -32,7 +36,7 @@ export const createChatGroup =
     try {
       const { data } = await axios.post(
         GROUP_CHAT_URL,
-        { ...payload },
+        { ...payload, key: logged_in_user_data.public_key },
         {
           headers: {
             Authorization: token,
@@ -82,14 +86,18 @@ export const deleteGroup = async (id: string) => {
 // update group
 export const updateChatGroup =
   (payload: createChatSchemaType, id: string) =>
-  async (dispatch: AppDispatch ) => {
+  async (dispatch: AppDispatch) => {
     dispatch(updateGroupStart());
     try {
-      const { data } = await axios.put(UPDATE_GROUP_CHAT_URL(id), {
-        ...payload,
-      },{
-        withCredentials: true,
-      });
+      const { data } = await axios.put(
+        UPDATE_GROUP_CHAT_URL(id),
+        {
+          ...payload,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       dispatch(updateGroupSuccess(data));
       toast.success(data?.message);
       return data;
@@ -100,5 +108,4 @@ export const updateChatGroup =
     }
   };
 
-  // get group By UUID(public page);
-  
+// get group By UUID(public page);

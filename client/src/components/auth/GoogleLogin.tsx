@@ -19,7 +19,7 @@ const GoogleLogin: React.FC = () => {
       if (authResponse["code"]) {
         // Use the separated service for Google authentication
         const result = await googleAuth(authResponse["code"]);
-        const { name, email, image, _id } = result.user;
+        const { name, email, image, _id, public_key } = result.user;
         // Dispatch the n action
         dispatch(
           login({
@@ -33,11 +33,20 @@ const GoogleLogin: React.FC = () => {
         // Save the user data to the local storage
         localStorage.setItem(
           "user",
-          JSON.stringify({ name, email, image, token: result.token, id: _id })
+          JSON.stringify({
+            name,
+            email,
+            image,
+            token: result.token,
+            id: _id,
+            public_key,  
+          })
         );
+
+        // genrate RSA key
+
         // Redirect to the home page
         if (groupid) {
-          alert("redirecting to chat page")
           navigate(`/chats/${groupid}`);
         } else {
           navigate("/dashboard");

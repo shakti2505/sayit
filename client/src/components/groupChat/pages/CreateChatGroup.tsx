@@ -19,11 +19,10 @@ import type { AppDispatch, RootState } from "../../../store/store"; // Import Ap
 import { useUser } from "../../../utils/criticalState";
 import Loader from "../../common/Loader";
 
-
 const CreateChatGroup: React.FC = () => {
-    const {token} = useUser();
+  const { token } = useUser();
 
-    const [open, setOpen]=  useState(false);
+  const [open, setOpen] = useState(false);
   // using the state from coponent slice
   const { loading } = useSelector(
     (creteChatGroupState: RootState) => creteChatGroupState.createChatGroupApi
@@ -42,22 +41,29 @@ const CreateChatGroup: React.FC = () => {
 
   const onSubmit = async (payload: createChatSchemaType) => {
     if (token) {
-   const res = await dispatch(createChatGroup(payload, token));
-      if (res.message==="Group created successfully") {
+      const res = await dispatch(createChatGroup(payload, token));
+      if (res.message === "Group created successfully") {
         setOpen(false);
+        localStorage.setItem(
+          res.data._id as string,
+          JSON.stringify({
+            user_id: res.data.group_admin,
+            name: res.data.name,
+            chatgroup: res.data._id,
+          })
+        );
       }
     } else {
       console.error("Token is undefined");
     }
   };
 
- 
   return (
-    <Dialog open={open} onOpenChange={setOpen} >
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button onClick={()=>setOpen(true)}>Create group</Button>
+        <Button onClick={() => setOpen(true)}>Create group</Button>
       </DialogTrigger>
-      <DialogContent onInteractOutside={(e) => e.preventDefault()} >
+      <DialogContent onInteractOutside={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>Create Your new chat</DialogTitle>
         </DialogHeader>
@@ -85,7 +91,7 @@ const CreateChatGroup: React.FC = () => {
             </Button>
           </div>
         </form>
-      </DialogContent >
+      </DialogContent>
     </Dialog>
   );
 };

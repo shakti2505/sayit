@@ -5,24 +5,25 @@ export const createGroup = async (req, res) => {
   try {
     const body = req.body;
     const user = req.user;
-    await ChatGroupModal.create({
+   const group=  await ChatGroupModal.create({
       name: body.name,
       passcode: body.passcode,
-      user_id: user._id,
+      group_admin: user._id,
+      members: [{ member_id: user._id, publicKey: body.key }],
     });
-
-    return res.status(201).json({ message: "Group created successfully" });
+    return res.status(201).json({ message: "Group created successfully", data:group });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
 
+
 // get all grouo created by user
 export const getAllGroupOfUser = async (req, res) => {
   try {
     const user = req.user;
-    const groups = await ChatGroupModal.find({ user_id: user._id }).sort({
+    const groups = await ChatGroupModal.find({ group_admin: user._id }).sort({
       createdAt: -1,
     });
     return res

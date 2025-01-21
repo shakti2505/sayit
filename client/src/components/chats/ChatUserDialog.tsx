@@ -80,16 +80,19 @@ const ChatUserDialog: React.FC<Props> = ({ open, setOpen }: Props) => {
   };
 
   // checking if user is already in added in the group then dialog to add a new user to group will not appear
+
   useEffect(() => {
     if (group_id) {
       const data = localStorage.getItem(group_id);
       const logged_in_user = localStorage.getItem("user") || "";
       if (data) {
         const JsonData = JSON.parse(data);
+        console.log("json data", JsonData);
         const user = JSON.parse(logged_in_user);
         if (JsonData?.name && JsonData?.chatgroup) {
           setOpen(false);
         }
+
         if (user) {
           setLoggedInUserId(user.id);
         }

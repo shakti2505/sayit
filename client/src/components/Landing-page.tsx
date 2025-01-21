@@ -5,8 +5,6 @@ import FeatureSection from './base/FeatureSection';
 import UserReview from './base/UserReview';
 import Footer from './base/Footer';
 
-
-
 interface Props {
     // define your props here
 }
